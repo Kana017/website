@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB Бағдарламалау — Электрондық оқу-әдістемелік кешен</title>
+    <style>
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #2e86c1;
+            --accent-color: #e74c3c;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            display: block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+            background-color: #f1f5f9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .badge {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .badge-lab {
+            background-color: #27ae60;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .btn-link {
+            display: inline-block;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid var(--secondary-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-link:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        button.btn-link {
+            background: white;
+            font: inherit;
+            cursor: pointer;
+        }
+        button.btn-link:focus { outline: 2px solid #1a5276; outline-offset: 2px; }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>WEB Бағдарламалау</h1>
+        <p>Электрондық оқу-әдістемелік кешен | 6В06101-«Бағдарламалық инженерия»</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">Оқулық туралы</a></li>
+            <li><a href="#lectures">Дәрістер тізімі</a></li>
+            <li><a href="#labs">Зертханалық жұмыстар</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+
+        <!-- Оқулық туралы бөлім -->
+        <section id="about" style="margin-bottom: 3rem;">
+            <h2 class="section-title">Пән туралы мағлұмат</h2>
+            <div class="card">
+                <p><strong>Оқытушы:</strong> PhD, аға оқытушы Найзағараева Ақгүл Аманжолқызы</p>
+                <p><strong>Оқу орны:</strong> «С. Сейфуллин атындағы Қазақ агротехникалық зерттеу университеті» КЕАҚ</p>
+                <p><strong>Мақсаты:</strong> Web-технологиялар негіздері, клиент-серверлік архитектура, статистикалық және динамикалық web-сайттар, HTML5, CSS3, JavaScript және PHP тілдерін меңгеру.</p>
+            </div>
+        </section>
+
+        <!-- Дәрістер бөлімі -->
+        <section id="lectures">
+            <h2 class="section-title">Дәріс сабақтары (15 сағат)</h2>
+            <div class="grid">
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">1-апта</span>
+                    </div>
+                    <h3>Дәріс №1: Web технологиялар негіздері. Web стандарттары және олардың дамуы</h3>
+                    <p>Желі түсінігі, клиент-сервер архитектурасы, TCP/IP протоколдары, провайдерлер иерархиясы.</p>
+                    <button type="button" class="btn-link open-book" data-page="23">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">2-апта</span>
+                    </div>
+                    <h3>Дәріс №2: Интернет коммуникациясының моделі. Pull- және Push-моделі</h3>
+                    <p>Интерактивтілік, гипермәтін, мультимедиа, «болу эффектісі», желілік навигация, сервистердің сипаттамасы.</p>
+                    <button type="button" class="btn-link open-book" data-page="28">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">3-апта</span>
+                    </div>
+                    <h3>Дәріс №3: Қолданушының Интернетке кіруі. «Соңғы миля» және Модем</h3>
+                    <p>Соңғы миля технологиясы, коммутациялы каналдар, модем қызметі, ASCII-кодтауы.</p>
+                    <button type="button" class="btn-link open-book" data-page="31">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">4-апта</span>
+                    </div>
+                    <h3>Дәріс №4: Интернет жүйесіне қатынасу технологиялары. DSL, ISDN</h3>
+                    <p>DSL, ADSL асимметриялық арналары, ISDN цифрлық байланыс желілері және олардың жылдамдығы.</p>
+                    <button type="button" class="btn-link open-book" data-page="34">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">5-апта</span>
+                    </div>
+                    <h3>Дәріс №5: Интернеттегі Web-серверлер және CGI технологиясы</h3>
+                    <p>Web-сервер қызметі, статистикалық және динамикалық беттер, CGI протоколы, скриптер.</p>
+                    <button type="button" class="btn-link open-book" data-page="36">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">6-апта</span>
+                    </div>
+                    <h3>Дәріс №6: Web-ресурстарды алу және кэштеу. Прокси-сервер</h3>
+                    <p>Кэштеу механизмі, прокси-сервер жұмысы, құжаттардың жарамдылық мерзімі, Web-жылдамдатқыштар.</p>
+                    <button type="button" class="btn-link open-book" data-page="38">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">7-апта</span>
+                    </div>
+                    <h3>Дәріс №7: Интернеттің іздеу технологиялары</h3>
+                    <p>Индекстелген каталогтар, іздеу машиналары (роботтар, өрмекшілер), индекс құру, буль операторлары.</p>
+                    <button type="button" class="btn-link open-book" data-page="40">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">8-апта</span>
+                    </div>
+                    <h3>Дәріс №8: Электрондық пошта. E-mail сервисі мен протоколдары</h3>
+                    <p>E-mail жұмыс механизмі, SMTP және POP3/IMAP протоколдары, MIME стандарты, әр түрлі таңбаларды жөнелту.</p>
+                    <button type="button" class="btn-link open-book" data-page="43">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">9-апта</span>
+                    </div>
+                    <h3>Дәріс №9: Файлдармен алмасу. FTP-сервисі және клиенттері</h3>
+                    <p>FTP протоколы, ресурстардың URL адресациясы, FTP клиенттерінің түрлері (консольдік, бағдарламалық).</p>
+                    <button type="button" class="btn-link open-book" data-page="44">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">10-апта</span>
+                    </div>
+                    <h3>Дәріс №10: Мәліметтерді қорғау. Цифрлық қолтаңба және Криптография</h3>
+                    <p>Симметриялық және асимметриялық шифрлау, Хэш-функция, цифрлық қолтаңба механизмі, ақпараттық қауіпсіздік.</p>
+                    <button type="button" class="btn-link open-book" data-page="49">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">11-апта</span>
+                    </div>
+                    <h3>Дәріс №11: Пайдаланушыларды идентификациялау. Cookies механизмі</h3>
+                    <p>Идентификация, аутентификация, HTTP stateless табиғаты, Set-Cookie атрибуттары, Secure/HttpOnly/SameSite.</p>
+                    <button type="button" class="btn-link open-book" data-page="51">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">12-апта</span>
+                    </div>
+                    <h3>Дәріс №12: HTML тілінің мультимедиялық мүмкіндіктері. Фреймдер мен Формалар</h3>
+                    <p>iframe, &lt;audio&gt;, &lt;video&gt;, &lt;img&gt; тегтері, HTML форма компоненттері (input, select), GET/POST әдістері.</p>
+                    <button type="button" class="btn-link open-book" data-page="59">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">13-апта</span>
+                    </div>
+                    <h3>Дәріс №13: Стильдердің сатылы кестелері (CSS)</h3>
+                    <p>CSS синтаксисі, Inline/Internal/External стильдер, CSS Box Model, позициялау (relative, absolute, fixed) және z-index.</p>
+                    <button type="button" class="btn-link open-book" data-page="63">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">14-апта</span>
+                    </div>
+                    <h3>Дәріс №14: JavaScript тілі</h3>
+                    <p>Синтаксис, айнымалылар (let, const), типеу, шарттар, циклдер, функциялар, объектілер, DOM және оқиғалар (events).</p>
+                    <button type="button" class="btn-link open-book" data-page="67">Материалды ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge">15-апта</span>
+                    </div>
+                    <h3>Дәріс №15: Web-қосымшалар интерфейсі. HTTP хаттамасы. PHP тілі негіздері</h3>
+                    <p>HTTP Request/Response, күй кодтары, серверлік бағдарламалау, PHP тілінің синтаксисі, формаларды өңдеу.</p>
+                    <button type="button" class="btn-link open-book" data-page="72">Материалды ашу</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Зертханалық жұмыстар бөлімі -->
+        <section id="labs">
+            <h2 class="section-title">Зертханалық сабақтар (30 сағат)</h2>
+            <div class="grid">
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">1-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №1</h3>
+                    <p><strong>Тақырыбы:</strong> Веб-бағдарламалауға кіріспе. Visual Studio Code орнату.</p>
+                    <p><strong>Тапсырма:</strong> VS Code ортасын жүктеу, орнату, баптау және оның негізгі функционалын зерттеу.</p>
+                    <button type="button" class="btn-link open-book" data-page="80">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">2-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №2</h3>
+                    <p><strong>Тақырыбы:</strong> HTML құрылымдық блоктары және негізгі тегтер.</p>
+                    <p><strong>Тапсырма:</strong> HTML5 семантикалық тегтерін (&lt;header&gt;, &lt;nav&gt;, &lt;section&gt;, &lt;article&gt;, &lt;footer&gt;) қолдана отырып жеке сайт құру.</p>
+                    <button type="button" class="btn-link open-book" data-page="84">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">3-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №3</h3>
+                    <p><strong>Тақырыбы:</strong> HTML: Кестелер.</p>
+                    <p><strong>Тапсырма:</strong> &lt;table&gt;, &lt;tr&gt;, &lt;th&gt;, &lt;td&gt;, colspan, rowspan атрибуттарын қолдана отырып сабақ кестесін және студенттер тізімін құру.</p>
+                    <button type="button" class="btn-link open-book" data-page="87">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">4-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №4</h3>
+                    <p><strong>Тақырыбы:</strong> HTML: Тізімдер.</p>
+                    <p><strong>Тапсырма:</strong> Реттелген (&lt;ol&gt;), маркерленген (&lt;ul&gt;) және анықтамалар (&lt;dl&gt;) тізімдерін жасап, стилін өзгерту.</p>
+                    <button type="button" class="btn-link open-book" data-page="89">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">5-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №5</h3>
+                    <p><strong>Тақырыбы:</strong> HTML: Формалар, мультимедиа, фреймдер.</p>
+                    <p><strong>Тапсырма:</strong> Тіркелу формасын, емхана немесе оқуға түсу формаларын құрастыру (&lt;input&gt;, &lt;select&gt;, &lt;textarea&gt;).</p>
+                    <button type="button" class="btn-link open-book" data-page="92">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">6-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №6</h3>
+                    <p><strong>Тақырыбы:</strong> HTML мультимедиялық тегтеріне кіріспе.</p>
+                    <p><strong>Тапсырма:</strong> Веб-параққа сурет (&lt;img&gt;), аудио (&lt;audio&gt;), видео (&lt;video&gt;) және YouTube видеоларын (&lt;iframe&gt;) енгізу.</p>
+                    <button type="button" class="btn-link open-book" data-page="94">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">7-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №7</h3>
+                    <p><strong>Тақырыбы:</strong> CSS-ке кіріспе.</p>
+                    <p><strong>Тапсырма:</strong> Inline, Internal, External CSS тәсілдерін, селекторларды (Class, ID) және CSS Box Model қасиеттерін меңгеру.</p>
+                    <button type="button" class="btn-link open-book" data-page="97">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">8-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №8</h3>
+                    <p><strong>Тақырыбы:</strong> CSS позициялау.</p>
+                    <p><strong>Тапсырма:</strong> static, relative, absolute, fixed, sticky позициялау түрлерін және z-index қасиетін қолданып макет жасау.</p>
+                    <button type="button" class="btn-link open-book" data-page="101">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">9-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №9</h3>
+                    <p><strong>Тақырыбы:</strong> CSS Flexbox және Grid.</p>
+                    <p><strong>Тапсырма:</strong> Бір өлшемді (Flexbox) және екі өлшемді (Grid) заманауи макеттер мен торларды құру.</p>
+                    <button type="button" class="btn-link open-book" data-page="105">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">10-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №10</h3>
+                    <p><strong>Тақырыбы:</strong> JavaScript-ке кіріспе.</p>
+                    <p><strong>Тапсырма:</strong> JS айнымалылары, деректер типтері, математикалық Math объектісі, массивтер мен реттелген жолдарды өңдеу.</p>
+                    <button type="button" class="btn-link open-book" data-page="113">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">11-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №11</h3>
+                    <p><strong>Тақырыбы:</strong> JavaScript операторлары, циклдері, функциялары мен объектілері.</p>
+                    <p><strong>Тапсырма:</strong> Шартты операторлар (if/else), for/while циклдері, пайдаланушы функциялары және объектілер массивімен жұмыс.</p>
+                    <button type="button" class="btn-link open-book" data-page="116">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">12-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №12</h3>
+                    <p><strong>Тақырыбы:</strong> JS тілінде DOM-мен өзара әрекеттесу және манипуляция.</p>
+                    <p><strong>Тапсырма:</strong> DOM элементтерін таңдау, createElement, appendChild, addEventListener арқылы динамикалық пікірлер бөлімін жасау.</p>
+                    <button type="button" class="btn-link open-book" data-page="119">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">13-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №13</h3>
+                    <p><strong>Тақырыбы:</strong> PHP және веб-сервер: кіріспе және баптау.</p>
+                    <p><strong>Тапсырма:</strong> XAMPP серверлік бағдарламасын орнату, Apache серверін баптау және алғашқы .php скриптін іске қосу.</p>
+                    <button type="button" class="btn-link open-book" data-page="123">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">14-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №14</h3>
+                    <p><strong>Тақырыбы:</strong> PHP тіліндегі практикалық тапсырмалар.</p>
+                    <p><strong>Тапсырма:</strong> PHP операторларын, массивтерін, шарттарын қолдана отырып серверлік логика бағдарламаларын жазу.</p>
+                    <button type="button" class="btn-link open-book" data-page="123">Тапсырманы ашу</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="badge badge-lab">15-апта</span>
+                    </div>
+                    <h3>Зертханалық жұмыс №15</h3>
+                    <p><strong>Тақырыбы:</strong> PHP және MySQL көмегімен HTML-де тіркелу және кіру формасы.</p>
+                    <p><strong>Тапсырма:</strong> XAMPP, PHP және MySQL деректер қорымен байланысатын авторизация мен тіркелу формасын құру.</p>
+                    <button type="button" class="btn-link open-book" data-page="123">Тапсырманы ашу</button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 С.Сейфуллин атындағы Қазақ агротехникалық зерттеу университеті. Барлық құқықтар қорғалған.</p>
+    </footer>
+
+
+    <section id="bookReader" aria-label="Оқу материалы" hidden>
+      <div class="reader-topbar">
+        <button type="button" id="backToList">← Артқа қайту</button>
+        <strong id="bookTitle">Оқу материалы</strong>
+        <span id="pageStatus">Бет: 1</span>
+      </div>
+      <div class="book-shell" id="bookShell">
+        <button type="button" class="page-arrow" id="prevPage" aria-label="Алдыңғы бет">❮</button>
+        <div class="stage" id="stage">
+          <div class="book" id="book">
+            <div class="half left" id="halfL"></div>
+            <div class="half right" id="halfR"></div>
+            <div class="leaf" id="leaf">
+              <div class="face front" id="faceF"></div>
+              <div class="face back" id="faceB"></div>
+            </div>
+            <div class="spine" aria-hidden="true"></div>
+          </div>
+          <div class="loading" id="loading">Жүктелуде…</div>
+        </div>
+        <button type="button" class="page-arrow" id="nextPage" aria-label="Келесі бет">❯</button>
+      </div>
+      <div class="reader-controls">
+        <button type="button" id="prevPageBottom">← Алдыңғы бет</button>
+        <label>Бет нөмірі: <input id="pageNumber" type="number" min="1" max="153" value="1"></label>
+        <button type="button" id="goPage">Өту</button>
+        <button type="button" id="nextPageBottom">Келесі бет →</button>
+        <button type="button" id="soundToggle" aria-pressed="true">Дыбыс: қосулы</button>
+      </div>
+      <p class="reader-note">Беттерді жебелермен, бет жиегін басып немесе төмендегі батырмалармен ауыстырыңыз.</p>
+    </section>
+    <style>
+      #bookReader { position: fixed; inset: 0; z-index: 2000; background: radial-gradient(circle at 50% 40%, #6b4a32, #2e1d12); padding: 10px; color: #222; display:flex; flex-direction:column; }
+      #bookReader[hidden] { display: none; }
+      .reader-topbar { display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:8px 10px; background:#fff; border:1px solid #bbb; border-radius:4px; }
+      .reader-topbar strong { flex:1; min-width:180px; }
+      #bookReader button { padding:8px 12px; border:1px solid #777; background:#fff; color:#222; cursor:pointer; border-radius:3px; }
+      #bookReader button:disabled { opacity:.45; cursor:default; }
+      .book-shell { flex:1; min-height:0; display:flex; align-items:center; justify-content:center; gap:8px; margin:8px 0; }
+      .stage { position:relative; flex:1; height:100%; display:flex; align-items:center; justify-content:center; min-width:0; }
+      .loading { position:absolute; color:#fff; font-size:18px; }
+      .book { position:relative; perspective:2400px; box-shadow:0 0 0 8px #4a2f1b, 0 18px 40px rgba(0,0,0,.6); border-radius:3px; background:#fff; }
+      .half { position:absolute; top:0; width:50%; height:100%; background:#fff; overflow:hidden; }
+      .half.left { left:0; } .half.right { left:50%; }
+      .half::after, .face::before { content:''; position:absolute; inset:0; pointer-events:none; }
+      .half.left::after { background:linear-gradient(to left, rgba(0,0,0,.28), transparent 12%); }
+      .half.right::after { background:linear-gradient(to right, rgba(0,0,0,.28), transparent 12%); }
+      .spine { position:absolute; top:0; bottom:0; left:calc(50% - 1px); width:2px; background:rgba(0,0,0,.35); z-index:6; pointer-events:none; }
+      .half canvas, .face canvas, .half img, .face img, .half iframe, .face iframe { position:absolute; inset:0; width:100%; height:100%; border:0; display:block; background:#fff; }
+      .half.left, .half.right { cursor:pointer; }
+      .leaf { position:absolute; top:0; left:50%; width:50%; height:100%; transform-origin:left center; transform-style:preserve-3d; z-index:5; display:none; will-change:transform; }
+      .leaf.show { display:block; }
+      .face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:#fff; overflow:hidden; }
+      .face.back { transform:rotateY(180deg); }
+      .face.front::before { background:linear-gradient(to right, rgba(0,0,0,.3), transparent 45%); opacity:0; z-index:2; }
+      .face.back::before { background:linear-gradient(to left, rgba(0,0,0,.3), transparent 45%); opacity:0; z-index:2; }
+      .leaf.flipping .face::before { animation:shade .9s ease-in-out; }
+      @keyframes shade { 0%,100% { opacity:0; } 50% { opacity:1; } }
+      .page-arrow { font-size:22px; min-width:42px; min-height:56px; }
+      .reader-controls { display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; color:#fff; }
+      .reader-controls input { width:72px; padding:7px; }
+      .reader-note { text-align:center; margin:8px; font-size:14px; color:#e8d9c8; }
+      @media(max-width:600px) { #bookReader { padding:6px; } .page-arrow { min-width:32px; padding:8px 4px !important; } .reader-topbar { gap:8px; } }
+    </style>
+    <script>
+      (() => {
+        const $ = id => document.getElementById(id);
+        const reader = $('bookReader'), title = $('bookTitle'), status = $('pageStatus'), numberInput = $('pageNumber');
+        const stage = $('stage'), book = $('book'), leaf = $('leaf'), loading = $('loading'), soundToggle = $('soundToggle');
+        const halfL = $('halfL'), halfR = $('halfR'), faceF = $('faceF'), faceB = $('faceB');
+        const PDF_URL = 'course.pdf', DURATION = 900;
+        const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+        let total = 153, left = 1, busy = false, soundOn = true, mode = null, pdfDoc = null, ratio = 0.707, pw = 0, ph = 0;
+        let cache = new Map(), initPromise = null, surfaces = {};
+
+        // Дыбыс
+        const pageFlipAudio = new Audio('page_flip.wav'), bookOpenAudio = new Audio('book_open.wav');
+        pageFlipAudio.volume = bookOpenAudio.volume = 0.72;
+        function sound(kind) {
+          if (!soundOn) return;
+          try {
+            const a = kind === 'open' ? bookOpenAudio : pageFlipAudio;
+            a.pause(); a.currentTime = 0;
+            const p = a.play(); if (p && p.catch) p.catch(() => {});
+          } catch (e) {}
+        }
+
+        // PDF.js жүктеу; жүктелмесе (мыс., file://) iframe режиміне өтеді
+        const loadScript = src => new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+        function init() {
+          if (initPromise) return initPromise;
+          initPromise = (async () => {
+            try {
+              // 1) Дайын бет суреттері (pages/001.jpg ...) — PDF сияқты көрінбейді, file:// режимінде де жұмыс істейді
+              await loadScript('pages/meta.js');
+              total = Number(window.BOOK_PAGES) || 0;
+              if (!total) throw new Error('no pages');
+              await new Promise((ok, no) => { const im = new Image(); im.onload = () => { ratio = im.naturalWidth / im.naturalHeight; ok(); }; im.onerror = no; im.src = pageUrl(1); });
+              mode = 'image';
+            } catch (e0) { mode = null; }
+            if (!mode) try {
+              await loadScript(PDFJS + 'pdf.min.js');
+              pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + 'pdf.worker.min.js';
+              pdfDoc = await pdfjsLib.getDocument(PDF_URL).promise;
+              total = pdfDoc.numPages;
+              const v = (await pdfDoc.getPage(1)).getViewport({ scale: 1 });
+              ratio = v.width / v.height;
+              mode = 'canvas';
+            } catch (e) { mode = 'iframe'; ratio = 0.707; }
+            for (const [k, el] of Object.entries({ L: halfL, R: halfR, F: faceF, B: faceB })) {
+              const node = document.createElement(mode === 'canvas' ? 'canvas' : mode === 'image' ? 'img' : 'iframe');
+              if (mode === 'iframe') node.title = 'Оқулық беті';
+              el.prepend(node); surfaces[k] = node;
+            }
+            numberInput.max = total;
+          })();
+          return initPromise;
+        }
+
+        function layout() {
+          const aw = stage.clientWidth - 24, ah = stage.clientHeight - 24;
+          ph = Math.max(200, Math.min(ah, aw / 2 / ratio)); pw = ph * ratio;
+          book.style.width = (pw * 2) + 'px'; book.style.height = ph + 'px';
+          cache = new Map();
+        }
+
+        function getBitmap(n) {
+          if (!cache.has(n)) cache.set(n, (async () => {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const c = document.createElement('canvas');
+            if (n < 1 || n > total) { c.width = Math.round(pw * dpr); c.height = Math.round(ph * dpr); const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); return c; }
+            const page = await pdfDoc.getPage(n);
+            const base = page.getViewport({ scale: 1 });
+            const vp = page.getViewport({ scale: pw * dpr / base.width });
+            c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+            await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+            return c;
+          })());
+          return cache.get(n);
+        }
+
+        const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+        const pageUrl = n => `pages/${String(n).padStart(3, '0')}.jpg`;
+        const imgCache = new Map();
+        function loadImg(n) {
+          if (!imgCache.has(n)) imgCache.set(n, new Promise(ok => { const im = new Image(); im.onload = im.onerror = () => ok(); im.src = pageUrl(n); }));
+          return imgCache.get(n);
+        }
+        function prefetch(a) {
+          [a + 2, a + 3, a - 2, a - 1].forEach(n => {
+            if (mode === 'canvas') getBitmap(n); else if (mode === 'image' && n >= 1 && n <= total) loadImg(n);
+          });
+        }
+        async function paint(key, n) {
+          const s = surfaces[key];
+          if (mode === 'image') {
+            if (n < 1 || n > total) { s.src = BLANK; return; }
+            await loadImg(n);
+            s.src = pageUrl(n);
+            try { await s.decode(); } catch (e) {}
+          } else if (mode === 'canvas') {
+            const bmp = await getBitmap(n);
+            s.width = bmp.width; s.height = bmp.height;
+            s.getContext('2d').drawImage(bmp, 0, 0);
+          } else {
+            s.src = (n < 1 || n > total) ? 'about:blank' : `${PDF_URL}?p=${n}-${Date.now()}#page=${n}&toolbar=0&navpanes=0&view=Fit`;
+          }
+        }
+
+        function updateUI() {
+          const r = left + 1;
+          status.textContent = `Бет: ${Math.max(left, 1)}${r <= total ? '–' + r : ''} / ${total}`;
+          numberInput.value = Math.max(left, 1);
+          const canPrev = left > 1, canNext = left + 2 <= total;
+          ['prevPage', 'prevPageBottom'].forEach(i => $(i).disabled = !canPrev);
+          ['nextPage', 'nextPageBottom'].forEach(i => $(i).disabled = !canNext);
+        }
+
+        async function setSpread(a) {
+          left = a;
+          await Promise.all([paint('L', a), paint('R', a + 1)]);
+          updateUI();
+          prefetch(a);
+        }
+
+        // Кітап парағын аудару: target — жаңа spread-тің сол жақ беті
+        async function turnTo(target) {
+          target = Math.max(0, Math.min(total - 1, target));
+          if (busy || target === left) return;
+          busy = true;
+          const a = left, fwd = target > a;
+          let frames;
+          if (fwd) {   // оң жақ бет солға аударылады
+            await Promise.all([paint('F', a + 1), paint('B', target), paint('R', target + 1)]);
+            frames = [{ transform: 'rotateY(0deg)' }, { transform: 'rotateY(-180deg)' }];
+          } else {     // сол жақ бет оңға аударылады
+            await Promise.all([paint('L', target), paint('F', target + 1), paint('B', a)]);
+            frames = [{ transform: 'rotateY(-180deg)' }, { transform: 'rotateY(0deg)' }];
+          }
+          leaf.style.transform = frames[0].transform;
+          leaf.classList.add('show', 'flipping');
+          sound('page');
+          const anim = leaf.animate(frames, { duration: DURATION, easing: 'cubic-bezier(.45,.05,.3,1)', fill: 'forwards' });
+          try { await anim.finished; } catch (e) {}
+          await paint(fwd ? 'L' : 'R', fwd ? target : target + 1);
+          leaf.classList.remove('show', 'flipping');
+          anim.cancel();
+          left = target; busy = false;
+          updateUI();
+          prefetch(left);
+        }
+
+        const next = () => left + 2 <= total && turnTo(left + 2);
+        const prev = () => left > 1 && turnTo(left - 2);
+
+        document.querySelectorAll('.open-book').forEach(btn => btn.addEventListener('click', async () => {
+          const card = btn.closest('.card');
+          title.textContent = card?.querySelector('h3')?.textContent || 'Оқу материалы';
+          reader.hidden = false;
+          document.body.style.overflow = 'hidden';
+          loading.style.display = ''; book.style.visibility = 'hidden';
+          await init();
+          layout();
+          await setSpread(Math.max(1, Number(btn.dataset.page) || 1));
+          loading.style.display = 'none'; book.style.visibility = '';
+          sound('open');
+          $('backToList').focus();
+        }));
+
+        function back() {
+          reader.hidden = true; busy = false;
+          leaf.classList.remove('show', 'flipping');
+          if (mode === 'iframe') Object.values(surfaces).forEach(s => s.src = 'about:blank');
+          document.body.style.overflow = '';
+        }
+        $('backToList').addEventListener('click', back);
+        $('prevPage').addEventListener('click', prev);
+        $('nextPage').addEventListener('click', next);
+        $('prevPageBottom').addEventListener('click', prev);
+        $('nextPageBottom').addEventListener('click', next);
+        halfL.addEventListener('click', prev);
+        halfR.addEventListener('click', next);
+        const go = () => { const n = Math.max(1, Math.min(total, Number(numberInput.value) || 1)); turnTo(n); };
+        $('goPage').addEventListener('click', go);
+        numberInput.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+        soundToggle.addEventListener('click', () => {
+          soundOn = !soundOn;
+          soundToggle.textContent = `Дыбыс: ${soundOn ? 'қосулы' : 'өшірулі'}`;
+          soundToggle.setAttribute('aria-pressed', String(soundOn));
+          if (soundOn) sound('page');
+        });
+        document.addEventListener('keydown', e => {
+          if (reader.hidden || e.target === numberInput) return;
+          if (e.key === 'Escape') back();
+          if (e.key === 'ArrowLeft') prev();
+          if (e.key === 'ArrowRight') next();
+        });
+        let rt;
+        window.addEventListener('resize', () => {
+          if (reader.hidden || !mode) return;
+          clearTimeout(rt);
+          rt = setTimeout(async () => { if (busy) return; layout(); await setSpread(left); }, 200);
+        });
+      })();
+    </script>
+
+</body>
+</html>
