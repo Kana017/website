@@ -48,6 +48,7 @@ body.toc-open .sidebar{transform:none}}
 <aside class="sidebar" id="sidebar">
 <div class="search"><input type="search" id="tocSearch" placeholder="Мазмұннан іздеу…" aria-label="Іздеу"></div>
 <div class="seg" id="seg"><button type="button" data-f="all" class="on">Барлығы</button><button type="button" data-f="lec">Дәрістер</button><button type="button" data-f="lab">Зертхана</button></div>
+<a href="#cover" class="front" data-page="-1" data-title="Мұқаба"><b>📕</b><span>Мұқаба</span><em>—</em></a>
 <a href="#title" class="front" data-page="1" data-title="Титул беті"><b>★</b><span>Титул беті</span><em>1</em></a>
 <h4 class="lec">I бөлім · Дәрістер (15 сағат)</h4>
 <a href="#l1" class="lec" data-page="23" data-title="Дәріс №1: Web технологиялар негіздері. Web стандарттары және олардың дамуы"><b>1</b><span>Web технологиялар негіздері. Web стандарттары және олардың дамуы</span><em>23</em></a>
@@ -125,7 +126,10 @@ body.toc-open .sidebar{transform:none}}
       .reader-topbar strong { flex:1; min-width:0; font-size:1.02rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
       #pageStatus { font-size:.8rem; font-weight:600; padding:5px 12px; border-radius:99px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.14); backdrop-filter:blur(8px); }
       .book-shell { position:relative; flex:1; min-height:0; display:flex; align-items:center; justify-content:center; gap:10px; }
-      .book { position:relative; perspective:2400px; background:#fff; border-radius:4px; box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08), 0 0 80px rgba(80,100,255,.25); }
+      .book { transition: transform .9s cubic-bezier(.45,.05,.3,1); position:relative; perspective:2400px; background:#fff; border-radius:4px; box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08), 0 0 80px rgba(80,100,255,.25); }
+      .book.closed { background:transparent; box-shadow:none; }
+      .book.closed .half.left, .book.closed .spine { visibility:hidden; }
+      .book.closed .half.right { border-radius:2px 8px 8px 2px; box-shadow:0 30px 70px rgba(0,0,0,.6), 0 0 90px rgba(100,110,255,.35); }
       .page-arrow { width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.1); color:#fff; font-size:1.1rem; cursor:pointer; backdrop-filter:blur(8px); transition:transform .15s, background .2s; flex:none; }
       .page-arrow:hover:not(:disabled) { background:rgba(255,255,255,.22); transform:scale(1.08); }
       .page-arrow:disabled, .reader-controls button:disabled { opacity:.35; cursor:default; }
@@ -223,6 +227,13 @@ body.toc-open .sidebar{transform:none}}
           if (!cache.has(n)) cache.set(n, (async () => {
             const dpr = Math.min(window.devicePixelRatio || 1, 2);
             const c = document.createElement('canvas');
+            if (n === 0) {
+              c.width = Math.round(pw * dpr); c.height = Math.round(ph * dpr);
+              const x = c.getContext('2d'); x.fillStyle = '#12286b'; x.fillRect(0, 0, c.width, c.height);
+              const im = await new Promise(ok => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = 'cover.svg'; });
+              if (im) x.drawImage(im, 0, 0, c.width, c.height);
+              return c;
+            }
             if (n < 1 || n > total) { c.width = Math.round(pw * dpr); c.height = Math.round(ph * dpr); const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); return c; }
             const page = await pdfDoc.getPage(n);
             const base = page.getViewport({ scale: 1 });
@@ -235,7 +246,7 @@ body.toc-open .sidebar{transform:none}}
         }
 
         const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-        const pageUrl = n => `pages/${String(n).padStart(3, '0')}.jpg`;
+        const pageUrl = n => n === 0 ? 'cover.svg' : `pages/${String(n).padStart(3, '0')}.jpg`;
         const imgCache = new Map();
         function loadImg(n) {
           if (!imgCache.has(n)) imgCache.set(n, new Promise(ok => { const im = new Image(); im.onload = im.onerror = () => ok(); im.src = pageUrl(n); }));
@@ -249,7 +260,7 @@ body.toc-open .sidebar{transform:none}}
         async function paint(key, n) {
           const s = surfaces[key];
           if (mode === 'image') {
-            if (n < 1 || n > total) { s.src = BLANK; return; }
+            if (n < 0 || n > total) { s.src = BLANK; return; }
             await loadImg(n);
             s.src = pageUrl(n);
             try { await s.decode(); } catch (e) {}
@@ -258,15 +269,18 @@ body.toc-open .sidebar{transform:none}}
             s.width = bmp.width; s.height = bmp.height;
             s.getContext('2d').drawImage(bmp, 0, 0);
           } else {
-            s.src = (n < 1 || n > total) ? 'about:blank' : `${PDF_URL}?p=${n}-${Date.now()}#page=${n}&toolbar=0&navpanes=0&view=Fit`;
+            s.src = n === 0 ? 'cover.svg' : (n < 1 || n > total) ? 'about:blank' : `${PDF_URL}?p=${n}-${Date.now()}#page=${n}&toolbar=0&navpanes=0&view=Fit`;
           }
         }
 
         function updateUI() {
           const r = left + 1;
-          status.textContent = `Бет: ${Math.max(left, 1)}${r <= total ? '–' + r : ''} / ${total}`;
+          const closed = left <= -1;
+          book.classList.toggle('closed', closed);
+          book.style.transform = closed ? `translateX(${-pw / 2}px)` : '';
+          status.textContent = closed ? 'Мұқаба' : `Бет: ${Math.max(left, 1)}${r <= total ? '–' + r : ''} / ${total}`;
           numberInput.value = Math.max(left, 1);
-          const canPrev = left > 1, canNext = left + 2 <= total;
+          const canPrev = left > -1, canNext = left + 2 <= total;
           ['prevPage', 'prevPageBottom'].forEach(i => $(i).disabled = !canPrev);
           ['nextPage', 'nextPageBottom'].forEach(i => $(i).disabled = !canNext);
           if (typeof syncToc === 'function' && started) syncToc();
@@ -282,10 +296,12 @@ body.toc-open .sidebar{transform:none}}
 
         // Кітап парағын аудару: target — жаңа spread-тің сол жақ беті
         async function turnTo(target) {
-          target = Math.max(0, Math.min(total - 1, target));
+          target = Math.max(-1, Math.min(total - 1, target));
           if (busy || target === left) return;
           busy = true;
           const a = left, fwd = target > a;
+          if (a <= -1) { book.classList.remove('closed'); book.style.transform = ''; }
+          if (target <= -1) book.style.transform = `translateX(${-pw / 2}px)`;
           let frames;
           if (fwd) {   // оң жақ бет солға аударылады
             await Promise.all([paint('F', a + 1), paint('B', target), paint('R', target + 1)]);
@@ -313,7 +329,7 @@ body.toc-open .sidebar{transform:none}}
         let started = false, activeKey = null;
         const tocLinks = [...document.querySelectorAll('.sidebar a[data-page]')];
         function syncToc() {
-          let best = -1;
+          let best = -99;
           tocLinks.forEach(l => { const p = +l.dataset.page; if (p <= left && p > best) best = p; });
           const ties = tocLinks.filter(l => +l.dataset.page === best);
           const pick = ties.find(l => l.getAttribute('href') === activeKey) || ties[0];
@@ -323,12 +339,12 @@ body.toc-open .sidebar{transform:none}}
         async function openAt(link) {
           activeKey = link.getAttribute('href');
           await init();
-          if (!started) { started = true; layout(); await setSpread(+link.dataset.page); loading.style.display = 'none'; book.style.visibility = ''; sound('open'); }
+          if (!started) { started = true; layout(); await setSpread(+link.dataset.page); loading.style.display = 'none'; book.style.visibility = ''; void book.offsetWidth; book.style.transition = ''; sound('open'); }
           else await turnTo(+link.dataset.page);
           syncToc();
         }
         tocLinks.forEach(l => l.addEventListener('click', e => { e.preventDefault(); document.body.classList.remove('toc-open'); openAt(l); }));
-        book.style.visibility = 'hidden';
+        book.style.visibility = 'hidden'; book.style.transition = 'none';
         openAt(tocLinks[0]);
         $('prevPage').addEventListener('click', prev);
         $('nextPage').addEventListener('click', next);
