@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="kk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,7 +127,7 @@ body.toc-open .sidebar{transform:none}}
       .reader-topbar strong { flex:1; min-width:0; font-size:1.02rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
       #pageStatus { font-size:.8rem; font-weight:600; padding:5px 12px; border-radius:99px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.14); backdrop-filter:blur(8px); }
       .book-shell { position:relative; flex:1; min-height:0; display:flex; align-items:center; justify-content:center; gap:10px; }
-      .book { transition: transform .9s cubic-bezier(.45,.05,.3,1); position:relative; perspective:2400px; background:#fff; border-radius:4px; box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08), 0 0 80px rgba(80,100,255,.25); }
+      .book { position:relative; perspective:2400px; background:#fff; border-radius:4px; box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08), 0 0 80px rgba(80,100,255,.25); }
       .book.closed { background:transparent; box-shadow:none; }
       .book.closed .half.left, .book.closed .spine { visibility:hidden; }
       .book.closed .half.right { border-radius:2px 8px 8px 2px; box-shadow:0 30px 70px rgba(0,0,0,.6), 0 0 90px rgba(100,110,255,.35); }
@@ -277,7 +278,6 @@ body.toc-open .sidebar{transform:none}}
           const r = left + 1;
           const closed = left <= -1;
           book.classList.toggle('closed', closed);
-          book.style.transform = closed ? `translateX(${-pw / 2}px)` : '';
           status.textContent = closed ? 'Мұқаба' : `Бет: ${Math.max(left, 1)}${r <= total ? '–' + r : ''} / ${total}`;
           numberInput.value = Math.max(left, 1);
           const canPrev = left > -1, canNext = left + 2 <= total;
@@ -300,8 +300,7 @@ body.toc-open .sidebar{transform:none}}
           if (busy || target === left) return;
           busy = true;
           const a = left, fwd = target > a;
-          if (a <= -1) { book.classList.remove('closed'); book.style.transform = ''; }
-          if (target <= -1) book.style.transform = `translateX(${-pw / 2}px)`;
+          if (a <= -1) book.classList.remove('closed');
           let frames;
           if (fwd) {   // оң жақ бет солға аударылады
             await Promise.all([paint('F', a + 1), paint('B', target), paint('R', target + 1)]);
@@ -339,12 +338,12 @@ body.toc-open .sidebar{transform:none}}
         async function openAt(link) {
           activeKey = link.getAttribute('href');
           await init();
-          if (!started) { started = true; layout(); await setSpread(+link.dataset.page); loading.style.display = 'none'; book.style.visibility = ''; void book.offsetWidth; book.style.transition = ''; sound('open'); }
+          if (!started) { started = true; layout(); await setSpread(+link.dataset.page); loading.style.display = 'none'; book.style.visibility = ''; sound('open'); }
           else await turnTo(+link.dataset.page);
           syncToc();
         }
         tocLinks.forEach(l => l.addEventListener('click', e => { e.preventDefault(); document.body.classList.remove('toc-open'); openAt(l); }));
-        book.style.visibility = 'hidden'; book.style.transition = 'none';
+        book.style.visibility = 'hidden';
         openAt(tocLinks[0]);
         $('prevPage').addEventListener('click', prev);
         $('nextPage').addEventListener('click', next);
